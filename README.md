@@ -11,17 +11,20 @@ The main class we write is Particle_in_cell_2D(Lx, Lz, Nx, Nz, t_max, dt, dt_out
   
 To get the final result, use Particle_in_cell_2D.solve(), which will give (x,z, pos_x, pos_z, Ux, Uy, Uz, Bx, By, Bz, Ex, Ey, Ez) respectively.  
 
-& Requirements
+# Requirements
 Packages we use:  
 &bull; numpy  
 &bull; matplotlib  
 &bull; scipy  
 &bull; jupyter
+
 The SIVP simulation specifically makes use of
-&bull; scipy.sparse
-&bull; scipy.integrate
+* scipy.sparse
+* scipy.integrate
+  
 and further uses the external package
-&bull; opt_einsum
+* opt_einsum
+  
 for optimum weighting array contractions.
 
 
