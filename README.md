@@ -32,10 +32,13 @@ for optimum weighting array contractions.
 
 S. A. Balbus and J. F. Hawley. A Powerful Local Shear Instability in Weakly
 Magnetized Disks. I. Linear Analysis., 376:214, July 1991.
+
 C. K. Birdsall and A. B. Langdon. Plasma physics via computer simulation /
 .K. Birdsall, A.B. Langdon. Series in Plasma Physics. Adam Hilger, Bristol,
 1991.
+
 M. A. RIQUELME, E. QUATAERT, P. SHARMA, and A. SPITKOVSKY.
 Local two-dimensional particle-in-cell simulations of the collisionless magne-
 torotational instability. The Astrophysical journal, 755(1):1–20, 2012.
+
 Daniel G. A. Smith and Johnnie Gray, opt_einsum - A Python package for optimizing contraction order for einsum-like expressions. Journal of Open Source Software, 2018, 3(26), 753.
