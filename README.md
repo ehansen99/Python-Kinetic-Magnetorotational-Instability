@@ -11,6 +11,10 @@ The main class we write is Particle_in_cell_2D(Lx, Lz, Nx, Nz, t_max, dt, dt_out
   
 To get the final result, use Particle_in_cell_2D.solve(), which will give (x,z, pos_x, pos_z, Ux, Uy, Uz, Bx, By, Bz, Ex, Ey, Ez) respectively.  
 
+# Example and Results
+
+![Sample Results](https://github.com/ehansen99/Python-Kinetic-Magnetorotational-Instability/images/image1.png)
+
 # Requirements
 Packages we use:  
 &bull; numpy  
@@ -37,7 +41,7 @@ C. K. Birdsall and A. B. Langdon. Plasma physics via computer simulation /
 .K. Birdsall, A.B. Langdon. Series in Plasma Physics. Adam Hilger, Bristol,
 1991.
 
-M. A. RIQUELME, E. QUATAERT, P. SHARMA, and A. SPITKOVSKY.
+M. A. Riquelme, E. Quataert, P. Sharma, and A. Spitkovsky.
 Local two-dimensional particle-in-cell simulations of the collisionless magne-
 torotational instability. The Astrophysical journal, 755(1):1–20, 2012.
 
