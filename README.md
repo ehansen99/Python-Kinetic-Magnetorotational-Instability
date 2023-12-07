@@ -5,7 +5,106 @@ The MRI happens when a group of plasma rotating around a central object with big
   
 We use Particle-In-Cell (PIC) method which divide the box into many grids(cells) and put several particles in each grid. We will only record the position of the particles. For other variables like velocity, currency, electric field, and magnetic field, we assume that they are not attached the particles but the grids. 
 
-# Codes
+# Equations for the MRI Tested
+
+Our initial equations for the MRI in a shearing coordinate frame are (Riquelme, 2012)
+$$\frac{\partial\vec{B}}{\partial t} = -\nabla \times \vec{E} - sB_x\hat{y}$$
+$$\frac{\partial\vec{E}}{\partial t} = \nabla \times \vec{B} -4\pi\vec{J}- sE_x\hat{y}$$
+$$\frac{d\vec{p}}{dt} = 2\omega_0p_y\hat{x} - \frac{1}{2}\omega_0p_x\hat{y} + q(\vec{E}+\frac{\vec{u}}{c}\times\vec{B})$$
+
+Normalizing our equations, we find
+$$\frac{∂B(\vec{r},t)}{∂t} = - \frac{c}{V_{A,0}^z}∇ \times E(\vec{r},t) - sB_x(\vec{r},t) \hat{y} $$
+$$ \frac{∂B_x}{∂t} = \frac{c}{V_{A,0}^z}\frac{\partial E_y}{\partial z} \,\, $$
+$$ \frac{∂B_y}{∂t} =\frac{c}{V_{A,0}^z}(\frac{\partial E_z}{\partial x} - \frac{\partial E_x}{\partial z}) - sB_x \,\,; $$
+$$\frac{∂B_z}{∂t} = -\frac{c}{V_{A,0}^z}\frac{\partial E_y}{\partial x}  $$
+
+
+And for the electric field $\vec{E}$, we have:
+
+
+$$\frac{∂E(\vec{r},t)}{∂ t} = \frac{c}{V_{A,0}^z} ∇ \times B(\vec{r},t) - 4 \pi \vec{J} - s E_x(\vec{r},t) \hat{y} $$
+$$\frac{\partial E_x}{\partial t} = -\frac{c}{V_{A,0}^z}\frac{\partial B_y}{\partial z} - 4\pi J_x$$
+$$\frac{\partial E_y}{\partial t} = -\frac{c}{V_{A,0}^z}(\frac{\partial B_z}{\partial x}-\frac{\partial B_x}{\partial z}) - 4\pi J_y - sE_x$$
+$$\frac{\partial E_z}{\partial t} = \frac{c}{V_{A,0}^z} \frac{\partial B_y}{\partial x} - 4\pi J_z$$
+
+For the velocity:
+
+$
+\frac{∂u(\vec{r},t)}{∂ t} = 4\pi u_y \hat{x} - \pi u_x \hat{y} +2\pi \frac{q_{\alpha}}{|e|} \frac{m_i}{m_\alpha} (\frac{\omega_{c,i}}{\omega_0})(\frac{c}{V_{A,0}^z} E + u \times B)\\
+⇒ \frac{∂u_x}{∂ t} = 4\pi u_y + 2\pi \frac{q_{\alpha}}{|e|}\frac{m_i}{m_\alpha}(\frac{\omega_{c,i}}{\omega_0})(\frac{c}{V_{A,0}^z}E_x + (u_y B_z - u_z B_y))\\
+⇒\frac{∂u_y}{∂ t} = - \pi u_x + 2\pi \frac{q_{\alpha}}{|e|}\frac{m_i}{m_\alpha}(\frac{\omega_{c,i}}{\omega_0})(\frac{c}{V_{A,0}^z}E_y - (u_x B_z - u_z B_x))\\
+⇒\frac{∂u_z}{∂ t} = 2\pi \frac{q_{\alpha}}{|e|}\frac{m_i}{m_\alpha}(\frac{\omega_{c,i}}{\omega_0})(\frac{c}{V_{A,0}^z}E_z + (u_x B_y - u_y B_x))\\
+$
+
+Current Density:
+
+$
+J_x = (\frac{\omega_{c,ion}}{\omega_0})\frac{q_{\alpha}}{|e|}\frac{1}{2}\frac{c}{V_{A,0}^z}u_x\\
+J_y = (\frac{\omega_{c,ion}}{\omega_0})\frac{q_{\alpha}}{|e|}\frac{1}{2}\frac{c}{V_{A,0}^z}u_y\\
+J_z = (\frac{\omega_{c,ion}}{\omega_0})\frac{q_{\alpha}}{|e|}\frac{1}{2}\frac{c}{V_{A,0}^z}u_z
+$
+
+
+Boundary conditions: (Use periodic boundary conditions instead)
+
+$
+B(x+2\pi,:,:) = B(x,:,:), etc.
+$
+
+
+II. In finite differences:
+
+B Fields:
+
+$
+⇒ B_x[i+1,j,k] = B_x[i,j,k]+\frac{c}{V_{A,0}^z}\frac{Δt}{Δz}(E_y[i,j,k+1]-E_y[i,j,k]) \,\, ; \\
+$
+$
+⇒ B_y[i+1,j,k] = B_y[i,j,k]+\frac{c}{V_{A,0}^z}\frac{Δt}{Δx}(E_z[i,j+1,k]-E_z[i,j,k]) - \frac{c}{V_{A,0}^z}\frac{Δt}{Δz}(E_x[i,j,k+1]-E_x[i,j,k]) - s Δt B_x[i,j,k] \,\,; \\
+$
+$
+⇒ B_z[i+1,j,k] = B_z[i,j,k] -\frac{c}{V_{A,0}^z}\frac{Δt}{Δx}(E_y[i,j+1,k]-E_y[i,j,k])  \,\,;
+$
+
+E Fields:
+
+$
+⇒E_x[i+1,k,j] = E_x[i,j,k]-\frac{c}{V_{A,0}^z}\frac{Δt}{Δz}(B_y[i,j,k+1] - B_y[i,j,k]) - 4Δt\pi J_x[i,j,k]\,\,; \\
+$
+
+$
+⇒E_y[i+1,j,k] = E_y[i+1,j,k]-\frac{c}{V_{A,0}^z}\frac{Δt}{Δx}(B_z[i,j+1,k]-B_z[i,j,k])+\frac{c}{V_{A,0}^z}\frac{Δt}{Δz}(B_x[i,j,k+1]-B_x[i,j,k]) - 4\pi Δt J_y[i,j,k] - s Δt E_x[i,j,k]\,\,;\\
+$
+
+$
+⇒E_z[i+1,j,k] = E_z[i,j,k] + \frac{c}{V_{A,0}^z}\frac{Δt}{Δx}(B_y[i,j+1,k] - B_y[i,j,k]) - 4\pi Δt J_z[i,j,k]\,\,;
+$
+
+Velocity:
+
+$
+⇒ u_x^{i+1,j,k} = u_x^{i,j,k} + 4\pi Δt u_y^{i,j,k} + 2\pi Δt \frac{q_{\alpha}}{|e|}\frac{m_i}{m_\alpha}\frac{c}{V_{A,0}^z}(\frac{\omega_{c,i}}{\omega_0})(E_x + \frac{V_{A,0}^z}{c}(u_y^{i,j,k} B_z^{i,j,k} - u_z^{i,j,k} By^{i,j,k}))\\
+$
+$
+⇒u_y^{i+1,j,k} = u_y^{i,j,k}  - \pi Δt u_x^{i,j,k} + 2\pi Δt \frac{q_{\alpha}}{|e|}\frac{m_i}{m_\alpha}\frac{c}{V_{A,0}^z}(\frac{\omega_{c,i}}{\omega_0})(E_y - \frac{V_{A,0}^z}{c}(u_x^{i,j,k} B_z^{i,j,k} - u_z^{i,j,k} Bx^{i,j,k}))\\
+$
+$
+⇒u_z^{i+1,j,k} = u_z^{i,j,k} + 2\pi Δt \frac{q_{\alpha}}{|e|}\frac{m_i}{m_\alpha}\frac{c}{V_{A,0}^z}(\frac{\omega_{c,i}}{\omega_0})(E_z + \frac{V_{A,0}^z}{c}(u_x^{i,j,k} B_y^{i,j,k} - u_x^{i,j,k} By^{i,j,k}))\\
+$
+
+
+
+Current Density:
+
+$
+J_x[i,j,k] = (\frac{\omega_{c,ion}}{\omega_0})\frac{q_{\alpha}}{|e|}\frac{1}{2}\frac{c}{V_{A,0}^z}u_x^{i,j,k}\\
+J_y[i,j,k] = (\frac{\omega_{c,ion}}{\omega_0})\frac{q_{\alpha}}{|e|}\frac{1}{2}\frac{c}{V_{A,0}^z}u_y^{i,j,k}\\
+J_z[i,j,k] = (\frac{\omega_{c,ion}}{\omega_0})\frac{q_{\alpha}}{|e|}\frac{1}{2}\frac{c}{V_{A,0}^z}u_z^{i,j,k}
+$
+
+
+
+# Two Approaches
 
 We have two simulations to explore the MRI.
 
