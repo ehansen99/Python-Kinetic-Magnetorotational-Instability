@@ -17,14 +17,11 @@ Packages we use:
 &bull; matplotlib  
 &bull; scipy  
 &bull; jupyter
-
 The SIVP simulation specifically makes use of
 &bull; scipy.sparse
 &bull; scipy.integrate
-
 and further uses the external package
 &bull; opt_einsum
-
 for optimum weighting array contractions.
 
 
