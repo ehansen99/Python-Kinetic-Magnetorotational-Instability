@@ -13,7 +13,7 @@ To get the final result, use Particle_in_cell_2D.solve(), which will give (x,z, 
 
 # Example and Results
 
-![Sample Results](https://github.com/ehansen99/Python-Kinetic-Magnetorotational-Instability/images/image1.png)
+![image1](https://github.com/ehansen99/Python-Kinetic-Magnetorotational-Instability/assets/107236110/4b2c269b-906f-43c2-9cbf-11cc0a50266d)
 
 # Requirements
 Packages we use:  
