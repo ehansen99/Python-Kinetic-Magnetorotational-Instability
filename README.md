@@ -11,6 +11,9 @@ The main class we write is Particle_in_cell_2D(Lx, Lz, Nx, Nz, t_max, dt, dt_out
   
 To get the final result, use Particle_in_cell_2D.solve(), which will give (x,z, pos_x, pos_z, Ux, Uy, Uz, Bx, By, Bz, Ex, Ey, Ez) respectively.  
 
+
+![image](https://github.com/ehansen99/Python-Kinetic-Magnetorotational-Instability/assets/143833778/083fc629-8799-4be9-908f-b1983d25785e)
+
 # Requirements
 Packages we use:  
 &bull; numpy  
