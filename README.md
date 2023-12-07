@@ -6,11 +6,13 @@ The MRI happens when a group of plasma rotating around a central object with big
 We use Particle-In-Cell (PIC) method which divide the box into many grids(cells) and put several particles in each grid. We will only record the position of the particles. For other variables like velocity, currency, electric field, and magnetic field, we assume that they are not attached the particles but the grids. 
 
 # Codes
-Code 1. IVP Code:
 
+We have two simulations to explore the MRI.
 
-
-
+Code 1. SIVP Code: This code uses the built-in SciPy.Integrate routine solve_ivp to directly integrate the equations for the magnetorotational instability.
+More details about inputs and code options are described in the file SIVPSimulation.ipynb, and some preliminary results are described in SIVPSimulation.ipynb.
+This code produces results in SIVPAnalysis.ipynb similar to those found by Riquelme et al., but more careful study with improved grid resolution is needed to determine if our results are consistent with the present literature.
+Current results are limited by instability of a vectorized scheme to do PIC weighting.
 
 Code 2. Central Time Code:
 This code imports and uses scipy, numpy and math.
